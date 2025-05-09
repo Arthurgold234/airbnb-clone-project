@@ -154,42 +154,62 @@ Authentication. to verify if the user is who they claim to be. Use secure login 
 
 Authorization: to control what action a user can carry out. Implementation through Enforce role-based access control (RBAC) (e.g., guest, host, admin), Only allow hosts to create/edit properties and Only allow users to review properties they’ve booked and paid for
 
-Rate limiing to prevent Prevents abuse (e.g., bots spamming requests), Protects resources from being overloaded, Ensures fair usage among users, Improves security by slowing down brute-force attacks and Helps maintain server stability
+Rate Limiting
+Purpose: To prevent abuse, spamming, or brute-force attacks.
+Implementation: Limit login attempts per IP (e.g., max 5 per minute), Throttle booking or review creation requests and Use tools like Express-rate-limit (Node.js) or middleware in Django/Flask
+
+Data Validation & Sanitization
+Purpose: To protect against injection attacks (e.g., SQL injection, XSS).
+Implementation: Validate input on both frontend and backend, Escape or sanitize any user input before saving or displaying and Use ORM tools (e.g., Sequelize, Prisma, Django ORM) to avoid raw queries
+
+HTTPS Everywhere
+Purpose: To encrypt data in transit.
+Implementation: Enforce HTTPS using SSL/TLS certificates, Redirect all HTTP traffic to HTTPS
+
+Password Security
+Purpose: To protect user credentials.
+Implementation: Store passwords using strong hashing algorithms (e.g., bcrypt, Argon2), Enforce password strength rules and Never store plain-text passwords
+
+Secure Payments Handling
+Purpose:To protect financial data and prevent fraud.
+Implementation: Use third-party payment processors like Stripe or Paystack, Never store raw card details and Validate payment responses using secure callbacks (webhooks)
+
+Database Access Controls
+Purpose:To prevent unauthorized data access.
+Implementation: Use environment-based credentials (never hard-code passwords), Restrict database access by IP or role and Back up data securely and regularly
+
+Logging & Monitoring 
+Purpose: To detect and investigate security incidents.
+Implementation: Log user activities (e.g., logins, failed payments), Monitor for unusual patterns (e.g., excessive login attempts), Alert admins when suspicious activity occurs
 
 protecting user data can lead to reputational damage, can impersonates users or hosts, violation of data protection laws
 securing payments a breach can lead to finacial theft, fraudlent transactions and legal liablility for loss of customer funds
 Reviews influence trust and decision without protection user could spam and manipulate reviews, fake reviews will misled customers and host could be harm
 
-📌 Endpoints Overview
-REST API Endpoints
-Users
+🚀 CI/CD Pipeline
 
-GET /users/ - List all users
-POST /users/ - Create a new user
-GET /users/{user_id}/ - Retrieve a specific user
-PUT /users/{user_id}/ - Update a specific user
-DELETE /users/{user_id}/ - Delete a specific user
-Properties
+### What is CI/CD?
 
-GET /properties/ - List all properties
-POST /properties/ - Create a new property
-GET /properties/{property_id}/ - Retrieve a specific property
-PUT /properties/{property_id}/ - Update a specific property
-DELETE /properties/{property_id}/ - Delete a specific property
-Bookings
+**CI/CD** stands for **Continuous Integration** and **Continuous Deployment/Delivery**. It is a development practice that automates the process of building, testing, and deploying code. The goal is to make releasing software faster, safer, and more reliable.
 
-GET /bookings/ - List all bookings
-POST /bookings/ - Create a new booking
-GET /bookings/{booking_id}/ - Retrieve a specific booking
-PUT /bookings/{booking_id}/ - Update a specific booking
-DELETE /bookings/{booking_id}/ - Delete a specific booking
-Payments
+- **Continuous Integration (CI):** Every time a developer pushes code, it is automatically tested and integrated into the shared repository. This helps catch bugs early.
+- **Continuous Delivery/Deployment (CD):** Code that passes all tests is automatically deployed to staging or production environments, reducing manual work and deployment errors.
 
-POST /payments/ - Process a payment
-Reviews
+### Why It's Important for This Project
 
-GET /reviews/ - List all reviews
-POST /reviews/ - Create a new review
-GET /reviews/{review_id}/ - Retrieve a specific review
-PUT /reviews/{review_id}/ - Update a specific review
-DELETE /reviews/{review_id}/ - Delete a specific review
+- 🚨 **Prevents breaking changes** by testing code before it's merged.
+- 🚀 **Speeds up development** by automating repetitive tasks like builds and tests.
+- 🔐 **Improves security** by enforcing consistency and automated checks.
+- ✅ **Ensures reliability** of every new feature and update.
+- 📦 **Enables faster releases** to users with confidence.
+
+### Tools We Could Use
+
+- **GitHub Actions** – For automating tests, linting, and deployment steps on every push or pull request.
+- **Docker** – To containerize the app, making it easy to run consistently across environments.
+- **Heroku / Render / Vercel / AWS** – For automatic deployment of the app to a live server.
+- **PostgreSQL / MySQL (hosted)** – As the production database in deployment workflows.
+
+This setup ensures our Airbnb-style application is always tested, deployable, and production-ready.
+
+
