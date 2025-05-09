@@ -36,6 +36,7 @@ Features: Post and manage reviews for properties.
 7. Database Optimizations
 Indexing: Implement indexes for fast retrieval of frequently accessed data.
 Caching: Use caching strategies to reduce database load and improve performance.
+
 ⚙️ Technology Stack
 Django: A high-level Python web framework used for building the RESTful API.
 Django REST Framework: Provides tools for creating and managing RESTful APIs.
@@ -51,6 +52,88 @@ Backend Developer: Responsible for implementing API endpoints, database schemas,
 Database Administrator: Manages database design, indexing, and optimizations.
 DevOps Engineer: Handles deployment, monitoring, and scaling of the backend services.
 QA Engineer: Ensures the backend functionalities are thoroughly tested and meet quality standards.
+## 🧑 Database Design
+
+### Users
+The `users` entity will include:
+- `user_id` (Primary Key)
+- `name`
+- `sex`
+- `email_address` (Unique)
+- `password`
+- `created_at`
+- `account_status` (e.g., `'active'`, `'inactive'`, `'banned'`) — *optional, for user management*
+
+**Relationships:**
+- One user can create many properties (1:N)
+- One user can make many bookings (1:N)
+- One user can leave many reviews, only after booking and payment (business logic)
+
+---
+
+### Properties
+The `properties` entity will include:
+- `property_id` (Primary Key)
+- `location`
+- `price`
+- `availability` (`available_from` to `available_to`)
+- `user_id` (Foreign Key to Users)
+- `property_status` (e.g., `'active'`, `'inactive'`, `'suspended'`) — *optional, to control listing visibility*
+
+**Relationships:**
+- One property can have many bookings (1:N), but bookings must not overlap in time (conflict validation required)
+- One property can have many reviews (1:N)
+- One property can have many associated payments through bookings
+
+---
+
+### Bookings
+The `bookings` entity will include:
+- `booking_id` (Primary Key)
+- `booking_date`
+- `payment_made` (Boolean or status flag)
+- `user_id` (Foreign Key to Users)
+- `property_id` (Foreign Key to Properties)
+- `start_date`
+- `end_date`
+- `booking_status` (e.g., `'pending'`, `'confirmed'`, `'cancelled'`, `'completed'`) — *tracks progress of each booking*
+
+**Relationships:**
+- Each booking is for one property (N:1)
+- Each booking is made by one user (N:1)
+- Each booking has one payment (1:1)
+
+---
+
+### Reviews
+The `reviews` entity will include:
+- `review_id` (Primary Key)
+- `title`
+- `message`
+- `ratings`
+- `review_date`
+- `user_id` (Foreign Key to Users)
+- `property_id` (Foreign Key to Properties)
+
+**Relationships:**
+- One property can have many reviews (1:N)
+- One user can write many reviews (1:N), only after a valid, paid booking (business logic)
+
+---
+
+### Payments
+The `payments` entity will include:
+- `payment_id` (Primary Key)
+- `booking_id` (Foreign Key to Bookings)
+- `user_id` (Foreign Key to Users)
+- `payment_date`
+- `amount`
+- `payment_mode` (e.g., `'card'`, `'bank_transfer'`)
+- `payment_status` (e.g., `'pending'`, `'successful'`, `'failed'`, `'refunded'`) — *helps track payment issues*
+
+**Relationships:**
+- One user can make multiple payments for different bookings (1:N)
+- Each booking has exactly one payment (1:1)
 
 📈 API Documentation Overview
 REST API: Detailed documentation available through the OpenAPI standard, including endpoints for users, properties, bookings, and payments.
