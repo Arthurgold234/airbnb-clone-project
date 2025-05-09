@@ -62,6 +62,8 @@ Backend Developer: Responsible for implementing API endpoints, database schemas,
 Database Administrator: Manages database design, indexing, and optimizations.
 DevOps Engineer: Handles deployment, monitoring, and scaling of the backend services.
 QA Engineer: Ensures the backend functionalities are thoroughly tested and meet quality standards.
+
+
 ## 🧑 Database Design
 
 ### Users
@@ -145,9 +147,18 @@ The `payments` entity will include:
 - One user can make multiple payments for different bookings (1:N)
 - Each booking has exactly one payment (1:1)
 
-📈 API Documentation Overview
-REST API: Detailed documentation available through the OpenAPI standard, including endpoints for users, properties, bookings, and payments.
-GraphQL API: Provides a flexible query language for retrieving and manipulating data.
+
+🔠 API Security
+
+Authentication. to verify if the user is who they claim to be. Use secure login with hashed passwords (e.g., bcrypt), Implement JWT (JSON Web Tokens) or session-based authentication and Support for multi-factor authentication (MFA) in the future
+
+Authorization: to control what action a user can carry out. Implementation through Enforce role-based access control (RBAC) (e.g., guest, host, admin), Only allow hosts to create/edit properties and Only allow users to review properties they’ve booked and paid for
+
+Rate limiing to prevent Prevents abuse (e.g., bots spamming requests), Protects resources from being overloaded, Ensures fair usage among users, Improves security by slowing down brute-force attacks and Helps maintain server stability
+
+protecting user data can lead to reputational damage, can impersonates users or hosts, violation of data protection laws
+securing payments a breach can lead to finacial theft, fraudlent transactions and legal liablility for loss of customer funds
+Reviews influence trust and decision without protection user could spam and manipulate reviews, fake reviews will misled customers and host could be harm
 
 📌 Endpoints Overview
 REST API Endpoints
