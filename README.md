@@ -12,28 +12,38 @@ Payment Processing: Integrate a payment system to handle transactions and record
 Review System: Allow users to leave reviews and ratings for properties.
 Data Optimization: Ensure efficient data retrieval and storage through database optimizations.
 
-🛠️ Features Overview
+🛠️ Features breakdown
 
 1. API Documentation
 OpenAPI Standard: The backend APIs are documented using the OpenAPI standard to ensure clarity and ease of integration.
 Django REST Framework: Provides a comprehensive RESTful API for handling CRUD operations on user and property data.
 GraphQL: Offers a flexible and efficient query mechanism for interacting with the backend.
-2. User Authentication
+2. User Authentication and Authorization
+   ensure that only log in user can make bookings and authorization for only those that authorization to view
+   and make adjustment to object in database
 Endpoints: /users/, /users/{user_id}/
 Features: Register new users, authenticate, and manage user profiles.
-3. Property Management
+4. Property Management
+   ensure only user with guest role can place properties on the platform and make edit
 Endpoints: /properties/, /properties/{property_id}/
 Features: Create, update, retrieve, and delete property listings.
-4. Booking System
+
+6. Booking System
+   ensure only register user can make bookings
 Endpoints: /bookings/, /bookings/{booking_id}/
 Features: Make, update, and manage bookings, including check-in and check-out details.
-5. Payment Processing
+
+8. Payment Processing
+   make property owner and guest payment secure
 Endpoints: /payments/
 Features: Handle payment transactions related to bookings.
-6. Review System
+
+10. Review System
+    only paid user can make a review
 Endpoints: /reviews/, /reviews/{review_id}/
 Features: Post and manage reviews for properties.
-7. Database Optimizations
+
+12. Database Optimizations
 Indexing: Implement indexes for fast retrieval of frequently accessed data.
 Caching: Use caching strategies to reduce database load and improve performance.
 
